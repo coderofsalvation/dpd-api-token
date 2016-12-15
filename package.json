@@ -1,0 +1,27 @@
+{
+  "name": "dpd-api-token",
+  "version": "1.0.0",
+  "description": "Simple, Sessionless api-token authentication for deployd (+Ganalytics)",
+  "main": "index.js",
+  "directories": {
+    "test": "set -ex; for test in test/tests/*; do $test; done"
+  },
+  "scripts": {
+    "test": "set -ex; for test in test/tests/*; do $test; done"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderofsalvation/dpd-api-token.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coderofsalvation/dpd-api-token/issues"
+  },
+  "homepage": "https://github.com/coderofsalvation/dpd-api-token#readme",
+  "dependencies": {
+    "monkeypatch": "^1.0.0",
+    "universal-analytics": "^0.4.8"
+  }
+}
