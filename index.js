@@ -1,35 +1,18 @@
 var monkeypatch = require('monkeypatch')
 var Context = require('deployd/lib/context')
+var ga = require('./lib/ga.js')
 var patched = false
-var ua = require('universal-analytics');
-var lastEvent = false
-var visitor = false
-var timeoutEventSend = false
+
+ga.init()
 
 module.exports = function(Router, accountresource,apiTokenKey){
-
-  if( process.env.GA_TOKEN && process.env.NODE_ENV == 'production' )
-    visitor = ua( process.env.GA_TOKEN )
-
-  var gaEvent = function(){
-    if( ! visitor ) return
-    var args = Array.prototype.slice.call(arguments)
-    args.unshift( process.env.APINAME || "api" )
-    if( ! lastEvent ) lastEvent = visitor.event.apply( visitor, args)
-    else lastEvent = lastEvent.event.apply( visitor, args )
-    // this will send all events every 5 secs (and not more often)  
-    if( timeoutEventSend !== false ) clearTimeout( timeoutEventSend )
-    timeoutEventSend = setTimeout( function(){
-      lastEvent.send()
-      timeoutEventSend = false
-    }, process.env.GA_BUFFERTIME || 5000 )
-  }
 
   var middleware = function(req, res, next){
 
     var resources = process.server.resources
-    if( !resources ) return next()
+    if( !resources || !res ) return next()
     var resource = resources.find(function(r){ return r.name == accountresource })
+    ga.pageview(req.url,req.method)
     var error = function(msg, noconsole){
       if( !res.send ) return next() // weird edgecase
       res.status(400).send({code:400, message:msg})
@@ -46,13 +29,13 @@ module.exports = function(Router, accountresource,apiTokenKey){
         var user = user[0]
         req.user = user
         req.username = user.username
-        gaEvent("request."+user.username+".v"+req.headers['x-api-version'], req.method+" "+req.url )
+        ga.event("request."+user.username+".v"+req.headers['x-api-version'], req.method+" "+req.url )
         next()
       })
     }else{
       next()
     } 
-    gaEvent("request", req.method+" "+req.url )
+    ga.event("request", req.method+" "+req.url )
   }
 
   var route = Router.prototype.route
