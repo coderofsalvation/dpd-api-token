@@ -40,3 +40,10 @@ make sure you set these environment variables:
 Basically each request is buffered, and sent as google analytics events every GA_BUFFERTIME milliseconds.
 
 You can view realtime requests at `Realtime > Events`,  or create dashboards to sort/display the events.
+
+> NOTE: you can add events to analytics,  anywhere from within deployd :
+
+    process.server.ga.event("action name", "label/value")     // buffered event (adviced)
+    process.server.ga.ua                                      // universal analytics object
+
+for more info on `ua` usage see [docs](https://npmjs.org/package/universal-analytics)

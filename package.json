@@ -1,6 +1,6 @@
 {
   "name": "dpd-api-token",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple, Sessionless api-token authentication for deployd (+Ganalytics)",
   "main": "index.js",
   "directories": {

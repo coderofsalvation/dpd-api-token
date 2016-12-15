@@ -10,6 +10,7 @@ module.exports = function(Router, accountresource,apiTokenKey){
   var middleware = function(req, res, next){
 
     var resources = process.server.resources
+    if( !process.server.ga ) process.server.ga = ga
     if( !resources || !res ) return next()
     var resource = resources.find(function(r){ return r.name == accountresource })
     ga.pageview(req.url,req.method)
