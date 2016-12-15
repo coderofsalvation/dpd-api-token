@@ -26,10 +26,12 @@ module.exports = function(Router, accountresource,apiTokenKey){
   }
 
   var middleware = function(req, res, next){
+
     var resources = process.server.resources
     if( !resources ) return next()
     var resource = resources.find(function(r){ return r.name == accountresource })
     var error = function(msg, noconsole){
+      if( !res.send ) return next() // weird edgecase
       res.status(400).send({code:400, message:msg})
       if( !noconsole ) console.error(msg)
     }
