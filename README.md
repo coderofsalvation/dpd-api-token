@@ -1,5 +1,7 @@
 Simple, Sessionless api-token authentication for deployd with Ganalytics API metrics support
 
+![](https://raw.githubusercontent.com/coderofsalvation/dpd-api-token/master/metrics.png)
+
 ## Usage
 
     $ npm install dpd-acl-roles-permissions dpd-api-token --save
