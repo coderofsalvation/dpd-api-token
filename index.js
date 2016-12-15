@@ -12,7 +12,6 @@ module.exports = function(Router, accountresource,apiTokenKey){
     visitor = ua( process.env.GA_TOKEN )
 
   var gaEvent = function(){
-    console.dir(arguments)
     if( ! visitor ) return
     var args = Array.prototype.slice.call(arguments)
     args.unshift( process.env.APINAME || "api" )
