@@ -37,7 +37,8 @@ make sure you set these environment variables:
 * export APINAME=myapi
 * export GA_BUFFERTIME=5000
 
-Basically each request is buffered, and sent as google analytics events every GA_BUFFERTIME milliseconds.
+Basically each request is buffered, and sent as google analytics events every `GA_BUFFERTIME` milliseconds.
+
 
 You can view realtime requests at `Realtime > Events`,  or create dashboards to sort/display the events.
 
@@ -47,3 +48,5 @@ You can view realtime requests at `Realtime > Events`,  or create dashboards to 
     process.server.ga.ua                                      // universal analytics object
 
 for more info on `ua` usage see [docs](https://npmjs.org/package/universal-analytics)
+
+> NOTE: this module also tracks the processing time of each request (see 'Server Response Time' in google analytics pageviews)

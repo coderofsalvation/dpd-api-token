@@ -9,11 +9,19 @@ module.exports = function(Router, accountresource,apiTokenKey){
 
   var middleware = function(req, res, next){
 
+    var now = new Date().getTime()
+    var restime = 99999999
+    var end = res.end
+    res.end = function(){
+      restime = ( new Date().getTime() - now )
+      ga.pageview(req.url,req.method, restime)
+      return end.apply(this, arguments )
+    }
+
     var resources = process.server.resources
     if( !process.server.ga ) process.server.ga = ga
     if( !resources || !res ) return next()
     var resource = resources.find(function(r){ return r.name == accountresource })
-    ga.pageview(req.url,req.method)
     var error = function(msg, noconsole){
       if( !res.send ) return next() // weird edgecase
       res.status(400).send({code:400, message:msg})
