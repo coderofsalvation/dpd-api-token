@@ -9,9 +9,13 @@ Simple, Sessionless api-token authentication for deployd with Ganalytics API met
 app.js:
 
       require('dpd-api-token')( require('deployd/lib/router'), 'users','apikey')  // <----- add this
-      var deployd = require('deployd')
-      var dpd = deployd({port:3000});
-      dpd.listen();
+      try{
+        var deployd = require('deployd')
+        var dpd = deployd({port:3000});
+        dpd.listen();
+      }catch(e){
+        console.error(err.toString()) // becomes exception in analytics 
+      }
 
 test on the commandline:
 
@@ -44,8 +48,12 @@ You can view realtime requests at `Realtime > Events`,  or create dashboards to 
 
 > NOTE: you can add events to analytics,  anywhere from within deployd :
 
-    process.server.ga.event("action name", "label/value")     // buffered event (adviced)
-    process.server.ga.ua                                      // universal analytics object
+    process.server.ga.event("action name", "label/value")      // buffered event (adviced)
+    process.server.ga.timing("category", "actionname", 12)     // buffered event (adviced)
+    console.error("something went wrong")                      // sends exception 
+    process.server.ga.ua                                       // universal analytics object for unbuffered use 
+
+}
 
 for more info on `ua` usage see [docs](https://npmjs.org/package/universal-analytics)
 

@@ -10,6 +10,7 @@ module.exports = function(Router, accountresource,apiTokenKey){
   var middleware = function(req, res, next){
 
     var now = new Date().getTime()
+    req.starttime = now
     var restime = 99999999
     var end = res.end
     res.end = function(){
@@ -20,6 +21,7 @@ module.exports = function(Router, accountresource,apiTokenKey){
 
     var resources = process.server.resources
     if( !process.server.ga ) process.server.ga = ga
+
     if( !resources || !res ) return next()
     var resource = resources.find(function(r){ return r.name == accountresource })
     var error = function(msg, noconsole){
